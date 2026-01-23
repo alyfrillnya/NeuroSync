@@ -8,15 +8,12 @@ from streamlink import Streamlink
 config = json.load(open("config.json"))
 
 class NeuroLamp:
-    twitch_username = 'vedal987'
+    twitch_username = 'Shylily'
 
     x_start = config['x_start']
     x_end = config['x_end']
     y_start = config['y_start']
     y_end = config['y_end']
-
-    lamp_ip = config['lamp_ip']
-    lamp_token = config['lamp_token']
 
     last_color = np.array([0, 0, 0])
 
@@ -24,17 +21,9 @@ class NeuroLamp:
 
     def __init__(self):
         self.stream_url = self.get_twitch_stream_url()
-        self.yeelight = self.get_yeelight()
-
-
-    def get_yeelight(self):
-        return Yeelight(self.lamp_ip, self.lamp_token)
 
 
     def get_twitch_stream_url(self):
-        """
-        Get the best stream URL for the given Twitch channel using Streamlink's API.
-        """
         session = Streamlink()
         try:
             streams = session.streams(f"https://www.twitch.tv/{self.twitch_username}")
@@ -49,12 +38,7 @@ class NeuroLamp:
             print(f"Failed to get stream URL: {e}")
             return None
 
-
-    # In GPT I trust
     def get_important_pixels(self, frame):
-        """
-        Find the brightest color and the color furthest from gray (excluding near black/white) in a rectangle at the bottom-right of the frame.
-        """
         print(f"Saving debug frame.png")
         cv2.imwrite("frame.png", frame)
 
@@ -62,18 +46,13 @@ class NeuroLamp:
 
         print(f"Saving debug rectangle.png")
         cv2.imwrite("rectangle.png", roi)
-        
-        # Round each pixel's color values to the nearest multiple of 10
+    
         roi_reshaped = roi.reshape(-1, 3)
         rounded_colors = (np.round(roi_reshaped / 5) * 5).astype(int)
         
-        # Find the most occurring color
         unique_colors, counts = np.unique(rounded_colors, axis=0, return_counts=True)
         most_occurring_color = unique_colors[np.argmax(counts)]
-        # Values in array are reversed (bgr -> rgb)
         most_occurring_color = [int(f) for f in most_occurring_color[::-1]]
-        
-        # Calculate brightness as a percentage of closeness to white
         brightness_percentage = (np.linalg.norm(most_occurring_color) / np.linalg.norm([255, 255, 255])) * 100
         
         self.last_color = most_occurring_color
@@ -95,7 +74,7 @@ class NeuroLamp:
             print("Capturing new frame")
             cap = cv2.VideoCapture(self.stream_url)
             if not cap.isOpened():
-                print("Error: Unable to open the stream.")
+                print(f"{self.twitch_username} is not live or stream cannot be opened.")
                 return
 
             ret, frame = cap.read()
@@ -105,8 +84,6 @@ class NeuroLamp:
 
             else:
                 print("Error: Unable to capture a frame.")
-
-            # Release the video capture object
             cap.release()
 
             sleep(self.update_interval)
@@ -120,8 +97,6 @@ class NeuroLamp:
         if any([c < 1 or c > 255 for c in rgb]):
             print("Invalid RGB value, defaulting to brightness")
             rgb = [brightness] * 3
-        self.yeelight.set_brightness(brightness)
-        self.yeelight.set_rgb(rgb)
 
 
 
