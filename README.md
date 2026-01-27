@@ -1,5 +1,5 @@
 # NeuroSync
-Sync any lighting device to the colour of Neuro-sama's Lava Lamp!
+# Sync any lighting device to the colour of Neuro-sama's Lava Lamp!
 -----------------------------------------------------------------
 To configure the streamer, and pixel location that is captured by the script, open config.json to edit flags
 
