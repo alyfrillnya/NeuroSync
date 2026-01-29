@@ -1,4 +1,4 @@
-# NeuroSync
+# NeuroSync - a janky reimplementation of SwarmSync
 
 <!--
 This layout forces the image to render at its native pixel size (width=495, height=611),
@@ -22,14 +22,10 @@ the container will scroll horizontally rather than stacking the text below the i
 
   <!-- right cell: text takes remaining width -->
   <td style="vertical-align:top; padding-left:20px; width:100%;">
-    <h2>Sync any Home-assistant
-      compatible light to 
+    <h2>Sync any light to 
       Neuro-Sama's Stream!
     </h2>
     <p>
-   This project uses the StreamLink library
-      to grab frames from a Twitch stream, 
-      and extracts them with cv2
     </p>
   </td>
 </tr>
