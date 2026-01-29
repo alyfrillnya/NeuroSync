@@ -1,34 +1,41 @@
 # NeuroSync - a janky reimplementation of SwarmSync
 
-<!--
-This layout forces the image to render at its native pixel size (width=495, height=611),
-and keeps the text to the right. If the viewport is narrower than the combined width,
-the container will scroll horizontally rather than stacking the text below the image.
--->
-
 <div style="overflow-x:auto;">
 
 <table style="border-collapse:collapse;">
 <tr>
-  <!-- left cell: image at explicit native pixel width/height -->
   <td style="vertical-align:top; padding-right:20px; white-space:nowrap;">
-    <img
-      src="https://raw.githubusercontent.com/alyfrillnya/NeuroSync/4daa70b460f9b42d180392973cc58aa58cac5b89/README_image.png"
+  <img
+      src="https://github.com/alyfrillnya/NeuroSync/blob/main/README-media/README_image.png?raw=true"
       alt="NeuroSync"
       width="495"
       height="611"
     >
   </td>
 
-  <!-- right cell: text takes remaining width -->
   <td style="vertical-align:top; padding-left:20px; width:100%;">
-    <h2>Sync any light to 
-      Neuro-Sama's Stream!
-    </h2>
-    <p>
-    </p>
+  <img
+      src="https://github.com/alyfrillnya/NeuroSync/blob/main/README-media/README_image2.png"
+      alt="NeuroSync"
+      width="495"
+      height="611"
+    >
   </td>
 </tr>
 </table>
 
 </div>
+# TODO
+- Add mobile app
+- Improve device compatibility
+- Simplify run steps
+
+# TO RUN
+- Download repository
+- Flash Micropython on a microcontroller
+- Edit neurosama-client to take the websocket data and send it to the LEDs
+- Add neurosama-client.py to the root of the microcontroller using IDE of choice
+- Plug in microcontroller
+- Connect server or pc of choice to SSID "neurolamp" with the password "meowmeowlol"
+- Run the server code
+- Done!
